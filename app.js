@@ -3,7 +3,7 @@ const fixed_16Bits = flipError(info_16Bits)
 
 function RandomBinaryArray(length) {
     return Array.from({ length }, () => Math.floor(Math.random() * 2));
-  }
+}
   
 function getHighs(BitsArray){
     let Highs = []
@@ -25,6 +25,7 @@ function prepBlock(BitsArray){
     return error
 }
 
+
 function flipError(BitsArray){
     let fixedBitsArray = BitsArray.slice()
     let error = prepBlock(BitsArray)
@@ -32,6 +33,43 @@ function flipError(BitsArray){
     return fixedBitsArray
 }
 
+// |---|---|---|---|
+// | 1 | 1 | 1 | 0 |   0 - Data Bits
+// |---|---|---|---|  
+// | 1 | 0 | 0 | 0 |   1 - Parity Bits (0,1,2,4,8,..., 2^n)
+// |---|---|---|---|
+// | 1 | 0 | 0 | 0 |
+// |---|---|---|---|
+// | 0 | 0 | 0 | 0 |
+// |---|---|---|---|
+
+const P1 = [1,3,5,7,9,11,13,15]  //Even Columns
+const P2 = [2,3,6,7,10,11,14,15] //Last Two Columns
+const P3 = [4,5,6,7,12,13,14,15] //Even Rows
+const P4 = [8,9,10,11,12,13,14,15] //Last Two Rows
+
+function RandomDataArray(length) {
+    length += 5 //Space for parity bits
+    return Array.from({ length }, (value, index) => {
+        //Parity Bits exist at 0 and power of 2s
+        if (index === 0) return 'Z'
+        else if (Math.log2(index) % 1 === 0) return 'P';
+        else return Math.floor(Math.random() * 2);
+        });
+      }
+
+function CheckEven(ParityCheck, infoArray){
+    let sum = 0
+    for(i = 1; i < 8; i++){
+        sum += ParityCheck[i]
+    }
+    console.log(infoArray[ParityCheck[0]])
+    if(sum % 2 !== 0) infoArray[ParityCheck[0]] = 1
+    else infoArray[ParityCheck[0]] = 0
+}
+
+const info_11Bits = RandomDataArray(11)
+console.log(info_11Bits)
 
 //HTML part
 
@@ -43,12 +81,45 @@ const grid = Array.from({ length: 16 })
 function createGrid(ParentDiv, info) {
     const ParentDivContainer = document.querySelector("#" + ParentDiv);
     grid.forEach((cell, index) => {
-        const gridCell = document.createElement('div')
+        const gridCell = document.createElement('button')
         gridCell.classList.add('square')
-        gridCell.textContent = info[index]
+             
+        gridCell.id = ParentDiv + "_button_" + index;
         ParentDivContainer.append(gridCell)
+
+        if (index === 0) {
+            gridCell.onclick = function() {
+              // Action for the zeroth button
+              console.log("Zeroth button clicked!");
+            };
+          } else if (Math.log2(index) % 1 === 0) {
+            gridCell.onclick = function() {
+              // Action for power of 2 buttons
+              console.log("Power of 2 button clicked!");
+              switch(index){
+                case 1: CheckEven(P1, info_11Bits)
+                case 2: CheckEven(P2, info_11Bits)
+                case 4: CheckEven(P3, info_11Bits)
+                case 8: CheckEven(P4, info_11Bits)
+              }
+            };
+          } else {
+            gridCell.onclick = function() {
+              // Action for the rest of the buttons
+              console.log("Other button clicked!");
+            };
+          }
     })
 }
 
-createGrid('originalBits', info_16Bits)
+createGrid('originalBits', info_11Bits)
 createGrid('fixedBits', fixed_16Bits)
+
+for(i=0;i < 16; i++){
+    let prefix = "originalBits_button_"
+    if (i === 0) ;
+    else if (Math.log2(i) % 1 === 0) ;
+    else ;
+}
+
+

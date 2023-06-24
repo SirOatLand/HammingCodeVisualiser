@@ -9,12 +9,12 @@ body {
     align-items: center;
     flex-direction: column;
     height: 100vh;
+    font-family: 'Arimo', sans-serif;
 }
 
 .visualiser {
     display: flex;
     justify-content: space-between;
-    font-family: 'Arimo', sans-serif;
 }
 
 .bitGrid {
@@ -28,7 +28,7 @@ body {
     margin-right: 20px
 }
 
-.square {
+button.square {
     width: 100px;
     height: 100px;
     background-color: white;
@@ -36,9 +36,18 @@ body {
     box-sizing: border-box;
     color: black;
     font-size: 70px;
+    font-family: 'Arimo', sans-serif;
 
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+
+.square:hover {
+    background-color: lightgray;
+}
+
+.square:active {
+    background-color: grey;
 }
