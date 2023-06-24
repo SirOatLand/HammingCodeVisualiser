@@ -31,10 +31,9 @@ function prepBlock(BitsArray){
 }
 
 function flipError(BitsArray){
-    let fixedBitsArray = BitsArray
+    let fixedBitsArray = BitsArray.slice()
     let error = prepBlock(BitsArray)
-    if(error !== 0)
-    fixedBitsArray[error] = 1 - fixedBitsArray[error] //Flip the error bit
+    if(error !== 0) fixedBitsArray[error] = 1 - fixedBitsArray[error] //Flip the error bit
     return fixedBitsArray
 }
 
