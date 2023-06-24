@@ -1,10 +1,5 @@
 const info_16Bits = RandomBinaryArray(16)
 const fixed_16Bits = flipError(info_16Bits)
-console.log(info_16Bits)
-console.log(getHighs(info_16Bits))
-console.log(prepBlock(info_16Bits))
-console.log(flipError(info_16Bits))
-
 
 function RandomBinaryArray(length) {
     return Array.from({ length }, () => Math.floor(Math.random() * 2));
