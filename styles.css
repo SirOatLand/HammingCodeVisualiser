@@ -1,0 +1,44 @@
+body {
+    background-color: darkgrey;
+    color: white;
+
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.visualiser {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Arimo', sans-serif;
+}
+
+.bitGrid {
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    border: solid 5px black;
+    margin-left: 20px;
+    margin-right: 20px
+}
+
+.square {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    border: solid 5px black;
+    box-sizing: border-box;
+    color: black;
+    font-size: 70px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
