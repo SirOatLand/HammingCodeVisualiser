@@ -133,11 +133,11 @@ function createGrid(ParentDiv, info) {
         
         //Add hover text on each buttons
         if (index === 0) {
-          gridCell.title = "This is the 'Zeroth Parity Bit' that determine the whole panel."
+          gridCell.title = "Zeroth Parity Bit"
         } else if (Math.log2(index) % 1 === 0) {
-          gridCell.title = "This is a 'Parity Bit' that determine a specific rows/columns."
+          gridCell.title = "Parity Bit"
         } else {
-          gridCell.title = "This is an 'Information Bit' that is our target to preserve."
+          gridCell.title = "Information Bit"
         }
     })
 }
