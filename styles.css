@@ -1,6 +1,6 @@
 body {
     background-color: darkgrey;
-    color: white;
+    color: black;
 
     margin: 0;
     padding: 0;
@@ -14,7 +14,19 @@ body {
 
 .visualiser {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+}
+
+.gridText {
+    width: 200rem;
+    position: absolute;
+    text-align: center;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 30px;
+    color: black;
 }
 
 .bitGrid {
@@ -46,6 +58,13 @@ button.square {
 
 .square:hover {
     background-color: lightgray;
+}
+
+.square[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    top: -100%;
+    left: 0;
 }
 
 .square:active {

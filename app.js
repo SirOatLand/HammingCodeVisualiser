@@ -63,7 +63,6 @@ function CheckEven(ParityCheck, infoArray){
     for(i = 1; i < 8; i++){
         sum += ParityCheck[i]
     }
-    console.log(infoArray[ParityCheck[0]])
     if(sum % 2 !== 0) infoArray[ParityCheck[0]] = 1
     else infoArray[ParityCheck[0]] = 0
 }
@@ -77,8 +76,9 @@ console.log(info_11Bits)
 ////////////////////HTML part///////////////////////
 ////////////////////////////////////////////////////
 
-const visualiser = document.querySelector("#visualiser")
-const info = document.querySelector("#info")
+function CalcParity(ParityCheck, infoArray){
+  
+}
 
 const grid = Array.from({ length: 16 })
 
@@ -103,8 +103,7 @@ function createGrid(ParentDiv, info) {
           },
           function(index) {
             // Action for power of 2 buttons
-            console.log("Power of 2 button clicked!");
-            console.log(index);
+            console.log("Power of 2 button clicked! " + "(" + index + ")");
             const powerOf2Actions = [
               () => CheckEven(P1, info_11Bits),
               () => CheckEven(P2, info_11Bits),
@@ -121,6 +120,7 @@ function createGrid(ParentDiv, info) {
           }
         ];
         
+        //Add 'onclick' function to each buttons
         gridCell.onclick = function() {
           if (index === 0) {
             actions[0]();
@@ -129,12 +129,20 @@ function createGrid(ParentDiv, info) {
           } else {
             actions[2]();
           }
-        };    
+        };
+        
+        //Add hover text on each buttons
+        if (index === 0) {
+          gridCell.title = "This is the 'Zeroth Parity Bit' that determine the whole panel."
+        } else if (Math.log2(index) % 1 === 0) {
+          gridCell.title = "This is a 'Parity Bit' that determine a specific rows/columns."
+        } else {
+          gridCell.title = "This is an 'Information Bit' that is our target to preserve."
+        }
     })
 }
 
 createGrid('originalBits', info_11Bits)
-createGrid('fixedBits', fixed_16Bits)
 
 // for(i=0;i < 16; i++){
 //     let prefix = "originalBits_button_"
