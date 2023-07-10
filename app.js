@@ -71,7 +71,11 @@ function CheckEven(ParityCheck, infoArray){
 const info_11Bits = RandomDataArray(11)
 console.log(info_11Bits)
 
-//HTML part
+
+
+////////////////////////////////////////////////////
+////////////////////HTML part///////////////////////
+////////////////////////////////////////////////////
 
 const visualiser = document.querySelector("#visualiser")
 const info = document.querySelector("#info")
@@ -81,45 +85,61 @@ const grid = Array.from({ length: 16 })
 function createGrid(ParentDiv, info) {
     const ParentDivContainer = document.querySelector("#" + ParentDiv);
     grid.forEach((cell, index) => {
+      //Create cells with 'square' class and 
+      //'ParentDiv + "_button_" + index' id
+      //with innerHTML according to the random bit array
         const gridCell = document.createElement('button')
         gridCell.classList.add('square')
-             
         gridCell.id = ParentDiv + "_button_" + index;
+        gridCell.innerHTML = info[index];
         ParentDivContainer.append(gridCell)
-
-        if (index === 0) {
-            gridCell.onclick = function() {
-              // Action for the zeroth button
-              console.log("Zeroth button clicked!");
-            };
-          } else if (Math.log2(index) % 1 === 0) {
-            gridCell.onclick = function() {
-              // Action for power of 2 buttons
-              console.log("Power of 2 button clicked!");
-              switch(index){
-                case 1: CheckEven(P1, info_11Bits)
-                case 2: CheckEven(P2, info_11Bits)
-                case 4: CheckEven(P3, info_11Bits)
-                case 8: CheckEven(P4, info_11Bits)
-              }
-            };
-          } else {
-            gridCell.onclick = function() {
-              // Action for the rest of the buttons
-              console.log("Other button clicked!");
-            };
+    
+      //Make each of the cell a separate buttons
+      //distinguish by between info bits and parity bits
+        const actions = [
+          function() {
+            // Action for the zeroth button
+            console.log("Zeroth button clicked!");
+          },
+          function(index) {
+            // Action for power of 2 buttons
+            console.log("Power of 2 button clicked!");
+            console.log(index);
+            const powerOf2Actions = [
+              () => CheckEven(P1, info_11Bits),
+              () => CheckEven(P2, info_11Bits),
+              () => CheckEven(P3, info_11Bits),
+              () => CheckEven(P4, info_11Bits)
+            ];
+            if (index <= powerOf2Actions.length) {
+              powerOf2Actions[index - 1]();
+            }
+          },
+          function() {
+            // Action for the rest of the buttons
+            console.log("Other button clicked!");
           }
+        ];
+        
+        gridCell.onclick = function() {
+          if (index === 0) {
+            actions[0]();
+          } else if (Math.log2(index) % 1 === 0) {
+            actions[1](index);
+          } else {
+            actions[2]();
+          }
+        };    
     })
 }
 
 createGrid('originalBits', info_11Bits)
 createGrid('fixedBits', fixed_16Bits)
 
-for(i=0;i < 16; i++){
-    let prefix = "originalBits_button_"
-    if (i === 0) ;
-    else if (Math.log2(i) % 1 === 0) ;
-    else ;
-}
+// for(i=0;i < 16; i++){
+//     let prefix = "originalBits_button_"
+//     if (i === 0) return;
+//     else if (Math.log2(i) % 1 === 0) return;
+// }
 
 
