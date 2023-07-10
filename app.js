@@ -43,10 +43,14 @@ function flipError(BitsArray){
 // | 0 | 0 | 0 | 0 |
 // |---|---|---|---|
 
-const P1 = [1,3,5,7,9,11,13,15]  //Even Columns
-const P2 = [2,3,6,7,10,11,14,15] //Last Two Columns
-const P3 = [4,5,6,7,12,13,14,15] //Even Rows
-const P4 = [8,9,10,11,12,13,14,15] //Last Two Rows
+const PChecks = {
+  P0: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], //All Cells
+  P1: [1,3,5,7,9,11,13,15], //Even Columns
+  P2: [2,3,6,7,10,11,14,15], //Last Two Columns
+  P3: [4,5,6,7,12,13,14,15], //Even Rows
+  P4: [8,9,10,11,12,13,14,15], //Last Two Rows
+};
+
 
 function RandomDataArray(length) {
     length += 5 //Space for parity bits
@@ -105,13 +109,14 @@ function createGrid(ParentDiv, info) {
             // Action for power of 2 buttons
             console.log("Power of 2 button clicked! " + "(" + index + ")");
             const powerOf2Actions = [
-              () => CheckEven(P1, info_11Bits),
-              () => CheckEven(P2, info_11Bits),
-              () => CheckEven(P3, info_11Bits),
-              () => CheckEven(P4, info_11Bits)
+              () => CheckEven(PChecks['P1'], info_11Bits),
+              () => CheckEven(PChecks['P2'], info_11Bits),
+              () => CheckEven(PChecks['P3'], info_11Bits),
+              () => CheckEven(PChecks['P4'], info_11Bits)
             ];
-            if (index <= powerOf2Actions.length) {
-              powerOf2Actions[index - 1]();
+            let ParityIndex = Math.log2(index);
+            if (ParityIndex % 1 === 0) {
+              powerOf2Actions[ParityIndex]();
             }
           },
           function() {
@@ -134,10 +139,49 @@ function createGrid(ParentDiv, info) {
         //Add hover text on each buttons
         if (index === 0) {
           gridCell.title = "Zeroth Parity Bit"
+
+          //Add hovering effects to the Zeroth Parity Cell
+          gridCell.addEventListener("mouseenter", () => {
+            changeCellColor(PChecks['P0'])
+          });
+          gridCell.addEventListener("mouseleave", () => {
+            resetCellColor(PChecks['P0']);
+          });
         } else if (Math.log2(index) % 1 === 0) {
           gridCell.title = "Parity Bit"
+
+          //Add hovering effects to the Parity Cells
+          let ParityIndex = Math.log2(index);
+          gridCell.addEventListener("mouseenter", () => {
+            changeCellColor(PChecks['P' + (ParityIndex + 1)])
+          });
+          gridCell.addEventListener("mouseleave", () => {
+            resetCellColor(PChecks['P' + (ParityIndex + 1)]);
+          });
+
         } else {
           gridCell.title = "Information Bit"
+        }
+        
+        function changeCellColor(cells) {
+          const color = "lightblue"; // Change to desired color
+          cells.slice(1).forEach((cell) => { // Slice to skip the first element (ParityBit itself)
+            const cellId = "originalBits_button_" + cell;
+            const cellElement = document.getElementById(cellId);
+            if (cellElement) {
+              cellElement.style.backgroundColor = color;
+            }
+          });
+        }
+
+        function resetCellColor(cells) {
+          cells.slice(1).forEach((cell) => {
+            const cellId = "originalBits_button_" + cell;
+            const cellElement = document.getElementById(cellId);
+            if (cellElement) {
+              cellElement.style.backgroundColor = "";
+            }
+          });
         }
     })
 }
