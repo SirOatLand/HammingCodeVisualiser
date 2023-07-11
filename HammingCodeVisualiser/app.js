@@ -62,13 +62,13 @@ function randomUnprepArray() {
         });
       }
 
-function CheckEven(ParityCheck, infoArray){
+function CheckEven(ParityCheck, unprepArray){
     let sum = 0
     for(i = 1; i < 8; i++){
         sum += ParityCheck[i]
     }
-    if(sum % 2 !== 0) infoArray[ParityCheck[0]] = 1
-    else infoArray[ParityCheck[0]] = 0
+    if(sum % 2 !== 0) unprepArray[ParityCheck[0]] = 1
+    else unprepArray[ParityCheck[0]] = 0
 }
 
 
@@ -148,7 +148,7 @@ function createGrid(ParentDiv, info) {
 
 //This function gives each buttons in the grid 
 //their own designated function when clicked
-function buttonFunctions(ParentDiv){
+function buttonFunctions(ParentDiv, unprepArray){
   grid.forEach((cell, index) => {
     const gridCell = document.getElementById(ParentDiv + '_button_' + index)
       //Make each of the cell a separate buttons
@@ -162,10 +162,10 @@ function buttonFunctions(ParentDiv){
           // Action for power of 2 buttons
           console.log("Power of 2 button clicked! " + "(" + index + ")");
           const powerOf2Actions = [
-            () => CheckEven(PChecks['P1'], info_11Bits),
-            () => CheckEven(PChecks['P2'], info_11Bits),
-            () => CheckEven(PChecks['P3'], info_11Bits),
-            () => CheckEven(PChecks['P4'], info_11Bits)
+            () => CheckEven(PChecks['P1'], unprepArray),
+            () => CheckEven(PChecks['P2'], unprepArray),
+            () => CheckEven(PChecks['P3'], unprepArray),
+            () => CheckEven(PChecks['P4'], unprepArray)
           ];
           let ParityIndex = Math.log2(index);
           if (ParityIndex % 1 === 0) {
@@ -191,11 +191,16 @@ function buttonFunctions(ParentDiv){
   });
 }
 
-const unprepArray = randomUnprepArray()
+var unprepArray = randomUnprepArray()
 console.log(unprepArray)
 
+const resetButton = document.getElementById('resetButton')
+resetButton.onclick = function() {
+  location.reload();
+}
+
 createGrid('unprepBits', unprepArray)
-buttonFunctions('unprepBits')
+buttonFunctions('unprepBits', unprepArray)
 createGrid('originalBits', unprepArray)
-buttonFunctions('originalBits')
+buttonFunctions('originalBits', unprepArray)
 
