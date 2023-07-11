@@ -192,6 +192,8 @@ function buttonFunctions(ParentDiv, unprepArray){
 }
 
 var unprepArray = randomUnprepArray()
+var preppedArray = Array.from({length: 16})
+preppedArray.fill('?', 0)
 console.log(unprepArray)
 
 const resetButton = document.getElementById('resetButton')
@@ -201,6 +203,6 @@ resetButton.onclick = function() {
 
 createGrid('unprepBits', unprepArray)
 buttonFunctions('unprepBits', unprepArray)
-createGrid('preppedBits', unprepArray)
-buttonFunctions('preppedBits', unprepArray)
+createGrid('preppedBits', preppedArray)
+buttonFunctions('preppedBits', preppedArray)
 
