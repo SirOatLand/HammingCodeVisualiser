@@ -80,12 +80,13 @@ console.log(info_11Bits)
 ////////////////////HTML part///////////////////////
 ////////////////////////////////////////////////////
 
-function CalcParity(ParityCheck, infoArray){
-  
-}
 
 const grid = Array.from({ length: 16 })
 
+//This function create cells in a 4x4 grid
+//each will be assigned as buttons.
+//This function also responsible for making
+//the on-cell hovering effects 
 function createGrid(ParentDiv, info) {
     const ParentDivContainer = document.querySelector("#" + ParentDiv);
     grid.forEach((cell, index) => {
@@ -97,44 +98,6 @@ function createGrid(ParentDiv, info) {
         gridCell.id = ParentDiv + "_button_" + index;
         gridCell.innerHTML = info[index];
         ParentDivContainer.append(gridCell)
-    
-      //Make each of the cell a separate buttons
-      //distinguish by between info bits and parity bits
-        const actions = [
-          function() {
-            // Action for the zeroth button
-            console.log("Zeroth button clicked!");
-          },
-          function(index) {
-            // Action for power of 2 buttons
-            console.log("Power of 2 button clicked! " + "(" + index + ")");
-            const powerOf2Actions = [
-              () => CheckEven(PChecks['P1'], info_11Bits),
-              () => CheckEven(PChecks['P2'], info_11Bits),
-              () => CheckEven(PChecks['P3'], info_11Bits),
-              () => CheckEven(PChecks['P4'], info_11Bits)
-            ];
-            let ParityIndex = Math.log2(index);
-            if (ParityIndex % 1 === 0) {
-              powerOf2Actions[ParityIndex]();
-            }
-          },
-          function() {
-            // Action for the rest of the buttons
-            console.log("Other button clicked!");
-          }
-        ];
-        
-        //Add 'onclick' function to each buttons
-        gridCell.onclick = function() {
-          if (index === 0) {
-            actions[0]();
-          } else if (Math.log2(index) % 1 === 0) {
-            actions[1](index);
-          } else {
-            actions[2]();
-          }
-        };
         
         //Add hover text on each buttons
         if (index === 0) {
@@ -166,7 +129,7 @@ function createGrid(ParentDiv, info) {
         function changeCellColor(cells) {
           const color = "lightblue"; // Change to desired color
           cells.slice(1).forEach((cell) => { // Slice to skip the first element (ParityBit itself)
-            const cellId = "originalBits_button_" + cell;
+            const cellId =  ParentDiv + "_button_" + cell;
             const cellElement = document.getElementById(cellId);
             if (cellElement) {
               cellElement.style.backgroundColor = color;
@@ -176,7 +139,7 @@ function createGrid(ParentDiv, info) {
 
         function resetCellColor(cells) {
           cells.slice(1).forEach((cell) => {
-            const cellId = "originalBits_button_" + cell;
+            const cellId =  ParentDiv + "_button_" + cell;
             const cellElement = document.getElementById(cellId);
             if (cellElement) {
               cellElement.style.backgroundColor = "";
@@ -186,12 +149,54 @@ function createGrid(ParentDiv, info) {
     })
 }
 
+
+//This function gives each buttons in the grid 
+//their own designated function when clicked
+function buttonFunctions(ParentDiv){
+  grid.forEach((cell, index) => {
+    const gridCell = document.getElementById(ParentDiv + '_button_' + index)
+      //Make each of the cell a separate buttons
+      //distinguish by between info bits and parity bits
+      const actions = [
+        function() {
+          // Action for the zeroth button
+          console.log("Zeroth button clicked!");
+        },
+        function(index) {
+          // Action for power of 2 buttons
+          console.log("Power of 2 button clicked! " + "(" + index + ")");
+          const powerOf2Actions = [
+            () => CheckEven(PChecks['P1'], info_11Bits),
+            () => CheckEven(PChecks['P2'], info_11Bits),
+            () => CheckEven(PChecks['P3'], info_11Bits),
+            () => CheckEven(PChecks['P4'], info_11Bits)
+          ];
+          let ParityIndex = Math.log2(index);
+          if (ParityIndex % 1 === 0) {
+            powerOf2Actions[ParityIndex]();
+          }
+        },
+        function() {
+          // Action for the rest of the buttons
+          console.log("Other button clicked!");
+        }
+      ];
+      
+      //Add 'onclick' function to each buttons
+      gridCell.onclick = function() {
+        if (index === 0) {
+          actions[0]();
+        } else if (Math.log2(index) % 1 === 0) {
+          actions[1](index);
+        } else {
+          actions[2]();
+        }
+      };
+  });
+}
+
+createGrid('unprepBits', info_11Bits)
+buttonFunctions('unprepBits')
 createGrid('originalBits', info_11Bits)
-
-// for(i=0;i < 16; i++){
-//     let prefix = "originalBits_button_"
-//     if (i === 0) return;
-//     else if (Math.log2(i) % 1 === 0) return;
-// }
-
+buttonFunctions('originalBits')
 
