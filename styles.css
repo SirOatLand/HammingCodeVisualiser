@@ -1,5 +1,5 @@
 body {
-    background-color: darkgrey;
+    background-color: lightsteelblue;
     color: black;
 
     margin: 0;
@@ -8,25 +8,25 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
+    height: 90vh;
     font-family: 'Arimo', sans-serif;
+}
+
+.title {
+    font-size: 50px;
+    padding-bottom: 90px;
+    text-decoration: underline;
 }
 
 .visualiser {
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
+
 .gridText {
-    width: 200rem;
-    position: absolute;
-    text-align: center;
-    top: 200px;
-    left: 50%;
-    transform: translateX(-50%);
     font-size: 30px;
-    color: black;
+    text-align: center;
 }
 
 .bitGrid {
@@ -37,7 +37,8 @@ body {
     flex-wrap: wrap;
     border: solid 5px black;
     margin-left: 20px;
-    margin-right: 20px
+    margin-right: 20px;
+    margin-top: 30px;
 }
 
 button.square {
