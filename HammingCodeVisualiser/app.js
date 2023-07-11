@@ -201,6 +201,6 @@ resetButton.onclick = function() {
 
 createGrid('unprepBits', unprepArray)
 buttonFunctions('unprepBits', unprepArray)
-createGrid('originalBits', unprepArray)
-buttonFunctions('originalBits', unprepArray)
+createGrid('preppedBits', unprepArray)
+buttonFunctions('preppedBits', unprepArray)
 
