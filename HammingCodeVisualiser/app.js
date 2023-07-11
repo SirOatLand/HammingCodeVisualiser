@@ -52,8 +52,8 @@ const PChecks = {
 };
 
 
-function RandomDataArray(length) {
-    length += 5 //Space for parity bits
+function randomUnprepArray() {
+    length = 16 //Space for parity bits
     return Array.from({ length }, (value, index) => {
         //Parity Bits exist at 0 and power of 2s
         if (index === 0) return 'Z'
@@ -71,8 +71,8 @@ function CheckEven(ParityCheck, infoArray){
     else infoArray[ParityCheck[0]] = 0
 }
 
-const info_11Bits = RandomDataArray(11)
-console.log(info_11Bits)
+const unprepArray = randomUnprepArray()
+console.log(unprepArray)
 
 
 
@@ -195,8 +195,9 @@ function buttonFunctions(ParentDiv){
   });
 }
 
-createGrid('unprepBits', info_11Bits)
+
+createGrid('unprepBits', unprepArray)
 buttonFunctions('unprepBits')
-createGrid('originalBits', info_11Bits)
+createGrid('originalBits', unprepArray)
 buttonFunctions('originalBits')
 
