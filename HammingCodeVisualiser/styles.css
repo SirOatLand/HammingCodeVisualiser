@@ -71,3 +71,10 @@ button.square {
 .square:active {
     background-color: grey;
 }
+
+.resetButton {
+    border: 0; 
+    background: transparent;
+    margin-top: 50px;
+}
+

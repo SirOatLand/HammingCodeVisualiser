@@ -71,10 +71,6 @@ function CheckEven(ParityCheck, infoArray){
     else infoArray[ParityCheck[0]] = 0
 }
 
-const unprepArray = randomUnprepArray()
-console.log(unprepArray)
-
-
 
 ////////////////////////////////////////////////////
 ////////////////////HTML part///////////////////////
@@ -195,6 +191,8 @@ function buttonFunctions(ParentDiv){
   });
 }
 
+const unprepArray = randomUnprepArray()
+console.log(unprepArray)
 
 createGrid('unprepBits', unprepArray)
 buttonFunctions('unprepBits')
