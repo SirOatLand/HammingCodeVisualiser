@@ -72,7 +72,7 @@ button.square {
     background-color: grey;
 }
 
-.resetButton {
+#resetButton {
     border: 0; 
     background: transparent;
     margin-top: 50px;
@@ -107,7 +107,7 @@ button.square {
     background-color: grey;
 }
 
-.resetButton:active {
+#resetButton:active {
     animation-name: scale;
     animation-iteration-count: infinite;
     animation-duration: 0.3s;
